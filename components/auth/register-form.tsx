@@ -17,7 +17,7 @@ import {
 import { AuthCardWrapper } from "@/components/auth/auth-card-wrapper";
 import { FormError } from "@/components/errors/form-error";
 
-// import { register } from "@/actions/auth/register";
+import { register } from "@/actions/auth/register";
 import { RegisterType } from "@/validation-types/auth-types";
 
 export const RegisterForm = () => {
@@ -34,7 +34,23 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof RegisterType>) => {
-    console.log("Usuario registrándose con los siguientes valores: ", values)    
+    setError("");
+
+    startTransition(() => {
+      register(values)
+        .then((data) => {
+          if (data?.error) {
+            setError(data.error);
+          }
+        })
+        .catch((error) => {
+          if (error?.message === "NEXT_REDIRECT") {
+            return;
+          }
+
+          setError("Algo salió mal");
+        });
+    });
   };
 
   return (
