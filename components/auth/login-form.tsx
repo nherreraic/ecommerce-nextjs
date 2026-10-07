@@ -18,7 +18,7 @@ import { AuthCardWrapper } from "@/components/auth/auth-card-wrapper";
 import { FormError } from "@/components/errors/form-error";
 
 import { LoginType } from "@/validation-types/auth-types";
-// import { login } from "@/actions/auth/login";
+import { login } from "@/actions/auth/login";
 
 export const LoginForm = () => {
   const [error, setError] = useState("");
@@ -33,8 +33,23 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginType>) => {
-    console.log("Usuario iniciando sesión con los siguientes valores: ", values)    
-  };
+    setError("");
+
+    startTransition(() => {
+      login(values)
+        .then((data) => {
+          if (data?.error) {
+            setError(data.error)
+          }
+        })
+        .catch((error) => {
+          if (error?.message === "NEXT_REDIRECT") {
+            return;
+          }
+          setError("Credenciales Invalidas o te registraste con google/github o algo salió mal")
+        })
+    })
+  }
 
   return (
     <AuthCardWrapper

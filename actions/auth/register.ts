@@ -4,7 +4,7 @@ import * as z from "zod";
 import bcrypt from "bcryptjs";
 
 import { RegisterType } from "@/validation-types/auth-types";
-// import { signIn } from "@/auth";
+import { signIn } from "@/auth";
 import db from "@/clients/db";
 import { User, RegistrationMethod } from "@/schema/user";
 
@@ -42,9 +42,9 @@ export const register = async (
   newUser.id = userRef.id;
   await userRef.set(newUser);
 
-  // await signIn("credentials", {
-  //   email: email,
-  //   password: values.password,
-  //   redirectTo: "/"
-  // })
+  await signIn("credentials", {
+    email: email,
+    password: values.password,
+    redirectTo: "/"
+  })
 }
