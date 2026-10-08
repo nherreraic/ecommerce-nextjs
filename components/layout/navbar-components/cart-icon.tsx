@@ -3,7 +3,7 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { useCartStore } from "@/stores/cart-store";
 import { useEffect } from "react";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { SecureUser } from "@/schema/user";
 
 interface CartIconProps {
@@ -15,7 +15,7 @@ export const CartIcon = ({
 }: CartIconProps) => {
   const totalItems = useCartStore((state) => state.totalItems);
   const fetchCart = useCartStore((state) => state.fetchCart);
-  // const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     fetchCart(user.id).catch((error) =>
@@ -24,7 +24,7 @@ export const CartIcon = ({
   }, [user.id])
 
   const handleGoToCart = () => {
-    console.error("Redirigendo a la página del carrito")
+    router.push("/cart");
   };
 
   return (
