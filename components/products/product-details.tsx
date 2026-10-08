@@ -7,7 +7,7 @@ import { SecureUser } from "@/schema/user";
 import { redirectToRegister } from "@/actions/redirects/redirect-to-register";
 import { useState } from "react";
 import { useCartStore } from "@/stores/cart-store";
-// import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 // import { ProductReviews } from "@/components/reviews/product-reviews";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"; // Importa estilos css de Swiper
@@ -30,7 +30,7 @@ export const ProductDetails = ({
   const [currentImage, setCurrentImage] = useState(product.pictureUrls[0]);
   const items = useCartStore((state) => state.items);
   const addItem = useCartStore((state) => state.addItem);
-  // const router = useRouter();
+  const router = useRouter();
 
   const possibleCartItem = items.find((item) => item.product.id === product.id);
   const productQuantityInCart = possibleCartItem ? possibleCartItem.quantity : 0;
@@ -76,7 +76,7 @@ export const ProductDetails = ({
   };
 
   const handleGoToCart = () => {
-    console.error("Redirigiendo al carrito: ");
+    router.push("/cart");
   }
 
   return (
