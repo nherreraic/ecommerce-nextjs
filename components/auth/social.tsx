@@ -2,8 +2,8 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useTransition } from "react";
-// import { gitHubLogin } from "@/actions/auth/github-login";
-// import { googleLogin } from "@/actions/auth/google-login";
+import { gitHubLogin } from "@/actions/auth/github-login";
+import { googleLogin } from "@/actions/auth/google-login";
 
 export const Social = () => {
   const [isGithubPending, startGithubTransition] = useTransition();
@@ -11,13 +11,13 @@ export const Social = () => {
 
   const onGitHubLogin = () => {
     startGithubTransition(() => {
-      console.log("gitHubLogin();")
+      gitHubLogin();
     })
   }
 
   const onGoogleLogin = () => {
     startGoogleTransition(() => {
-      console.log("googleLogin();")
+      googleLogin();
     })
   }
 
