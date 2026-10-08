@@ -46,7 +46,7 @@ export const LoginForm = () => {
           if (error?.message === "NEXT_REDIRECT") {
             return;
           }
-          setError("Credenciales Invalidas o te registraste con google/github o algo salió mal")
+          setError("Credenciales Inválidas o te registraste con google/github o algo salió mal")
         })
     })
   }
