@@ -1,12 +1,12 @@
 "use client";
 
 import { Product } from "@/schema/product";
-// import { CartItem } from "@/schema/cart-item";
+import { CartItem } from "@/schema/cart-item";
 import { SecureUser } from "@/schema/user";
 // import { Review } from "@/schema/review";
 import { redirectToRegister } from "@/actions/redirects/redirect-to-register";
 import { useState } from "react";
-// import { useCartStore } from "@/stores/cart-store";
+import { useCartStore } from "@/stores/cart-store";
 // import { useRouter } from "next/navigation"
 // import { ProductReviews } from "@/components/reviews/product-reviews";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -28,12 +28,12 @@ export const ProductDetails = ({
   bucketUrl,
 }: ProductDetailsProps) => {
   const [currentImage, setCurrentImage] = useState(product.pictureUrls[0]);
-  // const items = useCartStore((state) => state.items);
-  // const addItem = useCartStore((state) => state.addItem);
+  const items = useCartStore((state) => state.items);
+  const addItem = useCartStore((state) => state.addItem);
   // const router = useRouter();
 
-  // const possibleCartItem = items.find((item) => item.product.id === product.id);
-  // const productQuantityInCart = possibleCartItem ? possibleCartItem.quantity : 0;
+  const possibleCartItem = items.find((item) => item.product.id === product.id);
+  const productQuantityInCart = possibleCartItem ? possibleCartItem.quantity : 0;
 
   // // Calcular el promedio de estrellitas de las reviews
   // const averageRating =
@@ -49,35 +49,35 @@ export const ProductDetails = ({
       return;
     }
 
-    // // Validar si el stock es suficiente antes de agregar
-    // if (productQuantityInCart + 1 > product.stock) {
-    //   alert("No puedes agregar más de la cantidad disponible en stock");
-    //   return;
-    // }
+    // Validar si el stock es suficiente antes de agregar
+    if (productQuantityInCart + 1 > product.stock) {
+      alert("No puedes agregar más de la cantidad disponible en stock");
+      return;
+    }
 
-    // const cartItem: CartItem = {
-    //   product: {
-    //     id: product.id,
-    //     name: product.name,
-    //     description: product.description,
-    //     price: product.price,
-    //     pictureUrls: product.pictureUrls,
-    //     category: product.category
-    //   },
-    //   quantity: 1,
-    //   subtotal: product.price,
-    // };
+    const cartItem: CartItem = {
+      product: {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        pictureUrls: product.pictureUrls,
+        category: product.category
+      },
+      quantity: 1,
+      subtotal: product.price,
+    };
 
-    // try {
-    //   await addItem(user.id, cartItem);
-    // } catch (error) {
-    //   console.error("Error al agregar al carrito: ", error);
-    // }
+    try {
+      await addItem(user.id, cartItem);
+    } catch (error) {
+      console.error("Error al agregar al carrito: ", error);
+    }
   };
 
-  // const handleGoToCart = () => {
-  //   console.error("Redirigiendo al carrito: ");
-  // }
+  const handleGoToCart = () => {
+    console.error("Redirigiendo al carrito: ");
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-6 md:py-10">
@@ -152,7 +152,7 @@ export const ProductDetails = ({
           >
             {product.stock > 0 ? "Agregar al carrito" : "Sin stock"}
           </button>
-          {/* {productQuantityInCart > 0 && (
+          {productQuantityInCart > 0 && (
             <p className="text-sm text-green-600 mt-2">
               Ya tienes {productQuantityInCart} de este producto en tu carrito.
             </p>
@@ -164,7 +164,7 @@ export const ProductDetails = ({
             >
               Ir al carrito
             </button>
-          )} */}
+          )}
         </div>
       </div>
 
@@ -261,7 +261,7 @@ export const ProductDetails = ({
           >
             {product.stock > 0 ? "Agregar al carrito" : "Sin stock"}
           </button>
-          {/* {productQuantityInCart > 0 && (
+          {productQuantityInCart > 0 && (
             <p className="text-sm text-green-600 mt-2">
               Ya tienes {productQuantityInCart} de este producto en tu carrito.
             </p>
@@ -273,7 +273,7 @@ export const ProductDetails = ({
             >
               Ir al carrito
             </button>
-          )} */}
+          )}
         </div>
       </div>
 
