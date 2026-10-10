@@ -17,8 +17,8 @@ import {
 import { LogoutButton } from "@/components/auth/logout-button";
 import { redirectToRegister } from "@/actions/redirects/redirect-to-register";
 import { redirectToLogin } from "@/actions/redirects/redirect-to-login";
-// import { redirectToOrders } from "@/actions/redirects/redirect-to-orders";
-// import { redirectToPayments } from "@/actions/redirects/redirect-to-payments";
+import { redirectToOrders } from "@/actions/redirects/redirect-to-orders";
+import { redirectToPayments } from "@/actions/redirects/redirect-to-payments";
 import { SecureUser } from "@/schema/user";
 
 interface UserSettingsProps {
@@ -30,8 +30,8 @@ export const UserSettings = ({
 }: UserSettingsProps) => {
   const [isRegisterRedirectionPending, startRegisterRedirectionTransition] = useTransition();
   const [isLoginRedirectionPending, startLoginRedirectionTransition] = useTransition();
-  // const [isOrdersRedirectionPending, startOrdersRedirectionTransition] = useTransition();
-  // const [isPaymentsRedirectionPending, startPaymentsRedirectionTransition] = useTransition();
+  const [isOrdersRedirectionPending, startOrdersRedirectionTransition] = useTransition();
+  const [isPaymentsRedirectionPending, startPaymentsRedirectionTransition] = useTransition();
 
   const handleRegisterRedirection = () => {
     startRegisterRedirectionTransition(() => {
@@ -44,6 +44,19 @@ export const UserSettings = ({
       redirectToLogin();
     })
   }
+
+  const handleOrdersRedirection = () => {
+    startOrdersRedirectionTransition(() => {
+      redirectToOrders();
+    })
+  }
+
+    const handlePaymentsRedirection = () => {
+    startPaymentsRedirectionTransition(() => {
+      redirectToPayments();
+    })
+  }
+
   if (!user) {
     return (
       <DropdownMenu>
@@ -93,13 +106,15 @@ export const UserSettings = ({
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onSelect={() => console.log("Redireccionando a la página de órdenes")}
+          onSelect={handleOrdersRedirection}
+          disabled={isOrdersRedirectionPending}
         >
           <ShoppingBag className="mr-2 h-4 w-4" />
           <span>Mis Órdenes</span>
         </DropdownMenuItem>
         <DropdownMenuItem
-          onSelect={() => console.log("Redireccionando a la página de pagos")}
+          onSelect={handlePaymentsRedirection}
+          disabled={isPaymentsRedirectionPending}
         >
           <CreditCard className="mr-2 h-4 w-4" />
           <span>Mis Pagos</span>
