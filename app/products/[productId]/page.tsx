@@ -90,9 +90,6 @@ const ProductPage = async ({
       <Navbar
         user={secureUser}
       />
-      <div>
-        Este es el placeholder del producto {product.name}
-      </div>
       <ProductDetails
         product={product}
         user={secureUser}
