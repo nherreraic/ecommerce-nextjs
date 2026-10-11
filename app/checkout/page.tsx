@@ -40,7 +40,7 @@ const CheckoutPage = async () => {
         </div>
         <CheckoutSummary
           user={secureUser}
-          mercadoPagoPublicKey="Placer Holder MERCADO_PAGO_PUBLIC_KEY!"  // {process.env.MERCADO_PAGO_PUBLIC_KEY!}
+          mercadoPagoPublicKey={process.env.MERCADO_PAGO_PUBLIC_KEY!}
         />
       </div>
     </div>
